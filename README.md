@@ -1,8 +1,8 @@
 # Algorithm
-1일 1문제✍
+알고리즘 공부 중✍
 
-프로그래머스
-https://programmers.co.kr/
-
-백준 알고리즘
-https://www.acmicpc.net/
+<br>프로그래머스
+<br>https://programmers.co.kr/
+<br>
+<br>백준 알고리즘
+<br>https://www.acmicpc.net/
