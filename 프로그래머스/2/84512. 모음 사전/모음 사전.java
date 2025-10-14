@@ -1,35 +1,21 @@
 import java.util.*;
 
 class Solution {
-    
-    //1.모음 선언
-    static String[] arr = new String[]{"A","E","I","O","U"};
     static List<String> list = new ArrayList<>();
+    char[] cword = {'A','E','I','O','U'};
     
     public int solution(String word) {
-        int answer = 0;
-        
-        recursion("", 0);
-           
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals(word)){
-                answer = i;
-                break;
-            }
-        }
-        
-        return answer;
+        dfs("",0);
+        Collections.sort(list);
+        return list.indexOf(word) + 1;
     }
     
-    static void recursion(String str, int depth){
-        //1.문자 리스트에 저장
-        list.add(str);
+    public void dfs(String str, int depth){
+        if(depth > 5) return;
+        if(!str.isEmpty()) list.add(str);
         
-        //2.최대 길이 5임(depth 0부터 시작 함)
-        if(depth == 5) return;
-        
-        for(int i = 0; i < arr.length; i++){
-            recursion(str+arr[i], depth +1);
+        for(char c : cword){
+            dfs(str + c, depth +1);
         }
     }
 }
