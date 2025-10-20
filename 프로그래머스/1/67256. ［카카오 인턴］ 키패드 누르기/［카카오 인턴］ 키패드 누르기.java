@@ -1,50 +1,40 @@
-import java.util.*;
-
 class Solution {
     public String solution(int[] numbers, String hand) {
-        //손가락 시작하는 위치 셋팅
+        StringBuilder sb = new StringBuilder();
+        
+        //왼손,오른손 시작 위치
         int left = 10;
         int right = 12;
         
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < numbers.length; i++){
-            
-            // System.out.println(i);
-            int chNum = numbers[i];
-            
-            if(chNum == 1 || chNum == 4 || chNum == 7){
+        for(int n : numbers){
+            if(n == 1  || n == 4 || n == 7){
                 sb.append("L");
-                left  = chNum;
-            }else if(chNum == 3 || chNum == 6 || chNum == 9){
+                left = n;
+            }else if(n == 3  || n == 6 || n == 9){
                 sb.append("R");
-                right  = chNum;
+                right = n;
             }else{
-                if(chNum == 0) chNum = 11;  //0은 위치로 11임
+                if(n == 0) n = 11;
                 
-                //아래로 이동 거리는 Math.abs(chNum - left) / 3
-                //옆으로 이동 거리는 Math.abs(chNum - left) % 3
-                int lnum = Math.abs(chNum - left) / 3 + Math.abs(chNum - left) % 3;
-                int rnum = Math.abs(chNum - right) / 3 + Math.abs(chNum - right) % 3;
-                
-                if(lnum == rnum){
-                    if(hand.equals("right")){
-                        sb.append("R");
-                        right = chNum;
-                    }else{
-                        sb.append("L");
-                        left = chNum;
-                    }
-                }else if(lnum < rnum){
-                    sb.append("L");
-                    left = chNum;
-                }else{
-                    sb.append("R");
-                    right = chNum;
-                }
-                
-            }
+                int leftDist = Math.abs(n - left)/3 + Math.abs(n-left)%3;
+                int rightDist = Math.abs(n - right)/3 + Math.abs(n-right)%3;
             
-            // System.out.println(sb);
+                if(leftDist < rightDist){
+                    sb.append("L");
+                    left = n;
+                }else if(leftDist > rightDist){
+                    sb.append("R");
+                    right = n;
+                }else{
+                    if(hand.equals("left")){
+                        sb.append("L");
+                        left = n;
+                    }else{
+                        sb.append("R");
+                        right = n;
+                    }
+                }
+            }
             
         }
         return sb.toString();
