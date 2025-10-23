@@ -1,19 +1,11 @@
 -- 코드를 입력하세요
-SELECT X.USER_ID AS USER_ID
-     , X.NICKNAME AS NICKNAME
-     , X.CITY || ' ' || X.STREET_ADDRESS1 || ' ' || X.STREET_ADDRESS2 AS 전체주소
-     , SUBSTR(X.TLNO,1,3) || '-' || SUBSTR(X.TLNO, 4,4) || '-' || SUBSTR(X.TLNO, 8,4)  AS 전화번호
-FROM USED_GOODS_USER X
-   , (SELECT B.USER_ID AS USER_ID
-           , COUNT(*)  AS COUNT
-        FROM USED_GOODS_BOARD A
-           , USED_GOODS_USER  B
-       WHERE A.WRITER_ID = B.USER_ID
-       GROUP BY B.USER_ID )     Y
-WHERE X.USER_ID = Y.USER_ID
-  AND Y.COUNT >= 3
-ORDER BY X.USER_ID DESC
-;
-
-
- 
+SELECT USER_ID	
+     , NICKNAME
+     , city ||' '|| STREET_ADDRESS1 ||' ' || STREET_ADDRESS2 as "전체주소"
+     , substr(TLNO, 1, 3) || '-' || substr(TLNO, 4, 4) || '-' || substr(TLNO, 8, 4) as "전화번호"
+  FROM USED_GOODS_USER B
+WHERE USER_ID IN (SELECT WRITER_ID AS USER_ID
+                     FROM USED_GOODS_BOARD
+                    GROUP BY WRITER_ID
+                   HAVING COUNT(*) >= 3)
+ORDER BY USER_ID DESC
